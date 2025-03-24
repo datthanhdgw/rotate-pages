@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rotate-pages
+spec:
+  replicas: 2 
+  selector:
+    matchLabels:
+      app: rotate-pages # Add this label
+  template:
+    metadata:
+      labels:
+        app: rotate-pages
+    spec:
+      containers:
+        - name: rotate-pages
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}" 
+          ports:
+            - containerPort: 8080
