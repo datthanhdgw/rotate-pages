@@ -61,4 +61,4 @@ jobs:
           git config --global user.name 'datthanhdgw'
           git config --global user.email 'datthanh.dgw@gmail.com'
           git commit -am "updating image tag"
-          git push https://${{ secrets.ROTATE_PAGES_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
