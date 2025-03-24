@@ -56,9 +56,9 @@ jobs:
           # Update the values.yaml file with the new image tag
           sed -i "s/^  tag: .*/  tag: $new_image_tag/" "$chart_dir/values.yaml"
       
-      - name: Commit the changes made
-        run: | 
-          git config --global user.name 'datthanhdgw'
-          git config --global user.email 'datthanh.dgw@gmail.com'
-          git commit -am "updating image tag"
-          git push "https://x-access-token:${{ secrets.REGISTRY_GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:main
+      # - name: Commit the changes made
+      #   run: | 
+      #     git config --global user.name 'datthanhdgw'
+      #     git config --global user.email 'datthanh.dgw@gmail.com'
+      #     git commit -am "updating image tag"
+      #     git push "https://x-access-token:${{ secrets.REGISTRY_GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:main
