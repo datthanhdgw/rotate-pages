@@ -48,7 +48,7 @@ jobs:
 
       - name: Update Image Tag Values
         run: |
-          chart_dir="chart"
+          chart_dir="helm"
           new_image_tag=${{ github.sha }}
 
           # Update the values.yaml file with the new image tag
