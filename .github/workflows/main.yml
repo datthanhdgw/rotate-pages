@@ -41,7 +41,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.REGISTRY_GITHUB_TOKEN }}
 
       - name: Install Helm
         uses: azure/setup-helm@v3
@@ -61,4 +61,4 @@ jobs:
           git config --global user.name 'datthanhdgw'
           git config --global user.email 'datthanh.dgw@gmail.com'
           git commit -am "updating image tag"
-          git push https://${{ secrets.REGISTRY_GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
+          git push "https://x-access-token:${{ secrets.REGISTRY_GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:main
