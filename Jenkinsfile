@@ -16,24 +16,6 @@ pipeline {
             }
         }
         
-        stage('Deploy to Kubernetes') {
-            steps {
-                script {
-                    // Update Helm values with new image tag
-                    sh """
-                        sed -i 's|tag: .*|tag: ${DOCKER_TAG}|' ${HELM_CHART_PATH}/values.yaml
-                    """
-                    
-                    // Deploy using Helm
-                    sh """
-                        helm upgrade --install ${HELM_RELEASE_NAME} ${HELM_CHART_PATH} \
-                            --namespace ${KUBERNETES_NAMESPACE} \
-                            --create-namespace \
-                            --set image.tag=${DOCKER_TAG}
-                    """
-                }
-            }
-        }
     }
     
     post {
