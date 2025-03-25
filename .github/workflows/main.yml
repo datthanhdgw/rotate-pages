@@ -61,4 +61,7 @@ jobs:
       #     git config --global user.email 'datthanh.dgw@gmail.com'
       #     git commit -am "updating image tag"
       #     git push "https://x-access-token:${{ secrets.REGISTRY_GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:main
+<<<<<<< HEAD
           
+=======
+>>>>>>> 11d4653
