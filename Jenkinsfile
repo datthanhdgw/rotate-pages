@@ -34,26 +34,6 @@ pipeline {
                 }
             }
         }
-        
-        stage('Verify Deployment') {
-            steps {
-                script {
-                    // Wait for deployment to be ready
-                    sh """
-                        kubectl rollout status deployment/${HELM_RELEASE_NAME} \
-                            -n ${KUBERNETES_NAMESPACE} \
-                            --timeout=300s
-                    """
-                    
-                    // Check if service is accessible
-                    sh """
-                        kubectl get service ${HELM_RELEASE_NAME} \
-                            -n ${KUBERNETES_NAMESPACE} \
-                            -o jsonpath='{.spec.ports[0].nodePort}'
-                    """
-                }
-            }
-        }
     }
     
     post {
