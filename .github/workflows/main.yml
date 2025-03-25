@@ -31,7 +31,6 @@ jobs:
           context: .
           push: true
           tags: datthanhdgw/rotate-pages:${{ github.sha }},datthanhdgw/rotate-pages:latest
-
   update:
     name: Update Helm Manifests
     runs-on: ubuntu-latest
