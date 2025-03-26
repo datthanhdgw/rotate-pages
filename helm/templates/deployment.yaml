@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: rotate-pages
 spec:
-  replicas: 4
+  replicas: 3
   selector:
     matchLabels:
       app: rotate-pages # Add this label

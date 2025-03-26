@@ -6,8 +6,9 @@ metadata:
 spec:
   selector:
     app: rotate-pages
-  type: LoadBalancer
+  type: NodePort 
   ports:
     - protocol: TCP
       port: 8080
-      targetPort: 8080 # Cổng của ứng dụng trong Pod
+      targetPort: 8080 # Match the port where your Go application is running
+      nodePort: 32000 # Expose the service on this port
