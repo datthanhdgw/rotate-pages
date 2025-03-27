@@ -75,7 +75,6 @@ const FileUpload: React.FC = () => {
   };
   const FileUploadSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      // form reset on submit 
       (e.target as HTMLFormElement).reset();
       if (selectedfile.length > 0) {
           for (let index = 0; index < selectedfile.length; index++) {
