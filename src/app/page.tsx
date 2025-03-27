@@ -104,7 +104,7 @@ const FileUpload: React.FC = () => {
                     page.scale(new_size.width / width, new_size.height / height);
                 }
                 const setRota = parseInt(selectedfile[index].roteval, 10);
-                page.setRotation(degrees(setRota));
+                page.setRotation(degrees(setRota + page.getRotation().angle));
               });
               const pdfBytes = await pdfDoc.save();
               const blob = new Blob([new Uint8Array(pdfBytes)], { type: 'application/pdf' });
