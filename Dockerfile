@@ -15,11 +15,11 @@ RUN npm run build
 
 # Set production environment
 ENV NODE_ENV production
-ENV PORT 32001
+ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
 # Expose port
-EXPOSE 32001
+EXPOSE 3000
 
 # Start the application
 CMD ["npm", "start"] 
