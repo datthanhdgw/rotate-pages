@@ -30,7 +30,6 @@ interface RotationData {
   value: string;
 }
 
-
 const FileUpload: React.FC = () => {
   const [selectedfile, SetSelectedFile] = useState<FileData[]>([]);
   const [Files, SetFiles] = useState<FileData[]>([]);
@@ -73,6 +72,7 @@ const FileUpload: React.FC = () => {
       }
     }
   };
+
   const FileUploadSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       (e.target as HTMLFormElement).reset();
@@ -114,8 +114,8 @@ const FileUpload: React.FC = () => {
               const b64 = Buffer.from(pdfBytes).toString('base64');
               const dataUrl = "data:application/pdf;base64," + b64;
               selectedfile[index].filepfd = dataUrl;
-              SetFiles((preValue)=>{
-                  return[
+              SetFiles((preValue)=> {
+                  return [
                       ...preValue,
                       selectedfile[index]
                   ]   
@@ -127,15 +127,6 @@ const FileUpload: React.FC = () => {
       }
   };
 
-  // const DeleteFile = async (id) => {
-  //   if(window.confirm("Are you sure you want to delete this file?")){
-  //       const result = Files.filter((data)=>data.id !== id);
-  //     (result);
-  //   }else{
-  //       // alert('No');
-  //   }
-  // }
-
   const DeleteSelectFile = (id: string) => {
     if(window.confirm("Are you sure you want to delete this file?")){
         const result = selectedfile.filter((data) => data.id !== id);
@@ -143,136 +134,131 @@ const FileUpload: React.FC = () => {
     }else{
         // alert('No');
     }
-    
   }
+
   return (
-    <div className="row justify-content-center m-0">
-      <div className="fileupload-view">
-        <div className="row justify-content-center m-0">
-          <div className="col-md-6">
-            <div className="card mt-5">
-              <div className="card-body">
-                <div className="kb-data-box">
-                  <div className="kb-modal-data-title">
-                    <div className="kb-data-title">
-                      <h6>Multiple File Upload</h6>
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-3xl mx-auto">
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          <div className="mb-6">
+            <h2 className="text-2xl font-semibold text-gray-800">PDF File Upload & Rotate</h2>
+            <p className="text-gray-600 mt-1">Upload your PDF files and adjust their rotation</p>
+          </div>
+
+          <form onSubmit={FileUploadSubmit}>
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-500 transition-colors cursor-pointer">
+              <input
+                type="file"
+                id="fileupload"
+                className="hidden"
+                onChange={InputChange}
+                multiple
+                accept="application/pdf"
+              />
+              <label htmlFor="fileupload" className="cursor-pointer">
+                <div className="text-gray-600">
+                  <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <p className="mt-1">Drag and drop files here, or <span className="text-blue-500 font-medium">browse</span></p>
+                  <p className="text-sm text-gray-500">PDF files only</p>
+                </div>
+              </label>
+            </div>
+
+            <div className="mt-6 space-y-4">
+              {selectedfile.map((data) => (
+                <div key={data.id} className="flex items-center p-4 bg-gray-50 rounded-lg">
+                  <div className="flex-shrink-0">
+                    <svg className="h-8 w-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="ml-4 flex-1">
+                    <h3 className="text-sm font-medium text-gray-900">{data.filename}</h3>
+                    <div className="mt-1 text-sm text-gray-500">
+                      <span>{data.filesize}</span>
+                      <span className="mx-2">•</span>
+                      <span>{data.datetime}</span>
                     </div>
                   </div>
-                  <form onSubmit={FileUploadSubmit}>
-                    <div className="kb-file-upload">
-                      <div className="file-upload-box">
-                        <input
-                          type="file"
-                          id="fileupload"
-                          className="file-upload-input"
-                          onChange={InputChange}
-                          multiple
-                        />
-                        <span>
-                          Drag and drop or{" "}
-                          <span className="file-link">Choose your files</span>
-                        </span>
-                      </div>
-                    </div>
-                    <div className="kb-attach-box mb-3">
-                      {selectedfile.map((data) => {
-                      const { id, filename, filepfd, datetime, filesize } = data;
-                      return (
-                        <div className="file-atc-box" key={id}>
-                        {filename.match(/.(jpg|jpeg|png|gif|svg)$/i) ? (
-                          <div className="file-image">
-                          <img src={typeof filepfd === 'string' ? filepfd : undefined} alt={filename} />
-                          </div>
-                        ) : (
-                          <div className="file-image">
-                          <i className="far fa-file-alt"></i>
-                          </div>
-                        )}
-                        <div className="file-detail">
-                          <h6>{filename}</h6>
-                          <p></p>
-                          <p>
-                          <span>Size : {filesize}</span>
-                          <span className="ml-2">Modified Time : {datetime}</span>
-                          </p>
-                          <div className="file-actions">
-                          <button
-                            type="button"
-                            className="file-action-btn"
-                            onClick={() => DeleteSelectFile(id)}
-                          >
-                            Delete
-                          </button>
-                          <select
-                            className="file-action-select"
-                            defaultValue="90"
-                            onChange={(e) => {
-                              SetSelectedFile((prevFiles) =>
-                                prevFiles.map((file) =>
-                                  file.id === id ? { ...file, roteval: e.target.value } : file
-                                )
-                              )
-                            }}
-                          >
-                            <option value="90">90°</option>
-                            <option value="180">180°</option>
-                            <option value="270">270°</option>
-                            <option value="-90">-90°</option>
-                            <option value="0">0°</option>
-                          </select>
-                          </div>
-                        </div>
-                        </div>
-                      );
-                      })}
-                    </div>
-                    <div className="kb-buttons-box">
-                      <button
-                        type="submit"
-                        className="btn btn-primary form-submit"
-                      >
-                        Upload
-                      </button>
-                    </div>
-                  </form>
-                  {Files.length > 0 ? <div className="kb-attach-box">
-                    <hr />
-                    {Files.map((data, index) => {
-                      const { filename, filepfd, datetime, filesize } = data;
-                      return (
-                              <div className="file-atc-box" key={index}>
-                          {filename.match(/.(jpg|jpeg|png|gif|svg)$/i) ? (
-                              <div className="file-image">
-                                  <img src={typeof filepfd === 'string' ? filepfd : undefined} alt="" />
-                              </div>
-                          ) : (
-                              <div className="file-image">
-                                  <i className="far fa-file-alt"></i>
-                              </div>
-                          )}
-                          <div className="file-detail">
-                              <h6>{filename}</h6>
-                              <p>
-                                  <span>Size : {filesize}</span>
-                                  <span className="ml-3">Modified Time : {datetime}</span>
-                              </p>
-                              <div className="file-actions">
-                                  <a href={typeof filepfd === 'string' ? filepfd : undefined} className="file-action-btn" download={filename}>
-                                      Download
-                                  </a>
-                              </div>
-                          </div>
-                      </div>
-                      );
-                    })}
-                  </div> : ''}
+                  <div className="ml-4 flex-shrink-0 flex items-center space-x-2">
+                    <select
+                      className="block w-20 text-sm border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      defaultValue="90"
+                      onChange={(e) => {
+                        SetSelectedFile((prevFiles) =>
+                          prevFiles.map((file) =>
+                            file.id === data.id ? { ...file, roteval: e.target.value } : file
+                          )
+                        )
+                      }}
+                    >
+                      <option value="90">90°</option>
+                      <option value="180">180°</option>
+                      <option value="270">270°</option>
+                      <option value="-90">-90°</option>
+                      <option value="0">0°</option>
+                    </select>
+                    <button
+                      type="button"
+                      onClick={() => DeleteSelectFile(data.id)}
+                      className="text-red-600 hover:text-red-900"
+                    >
+                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
+              ))}
+            </div>
+
+            {selectedfile.length > 0 && (
+              <button
+                type="submit"
+                className="mt-6 w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                Upload and Process Files
+              </button>
+            )}
+          </form>
+
+          {Files.length > 0 && (
+            <div className="mt-8 border-t pt-8">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">Processed Files</h3>
+              <div className="space-y-4">
+                {Files.map((data, index) => (
+                  <div key={index} className="flex items-center p-4 bg-gray-50 rounded-lg">
+                    <div className="flex-shrink-0">
+                      <svg className="h-8 w-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div className="ml-4 flex-1">
+                      <h3 className="text-sm font-medium text-gray-900">{data.filename}</h3>
+                      <div className="mt-1 text-sm text-gray-500">
+                        <span>{data.filesize}</span>
+                        <span className="mx-2">•</span>
+                        <span>{data.datetime}</span>
+                      </div>
+                    </div>
+                    <a
+                      href={typeof data.filepfd === 'string' ? data.filepfd : undefined}
+                      download={data.filename}
+                      className="ml-4 inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    >
+                      Download
+                    </a>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
   );
 };
+
 export default FileUpload;
