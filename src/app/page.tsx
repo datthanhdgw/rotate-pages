@@ -141,7 +141,7 @@ const FileUpload: React.FC = () => {
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg p-6">
           <div className="mb-6">
-            <h2 className="text-2xl font-semibold text-gray-800">PDF File Upload & Rotate</h2>
+            <h2 className="text-2xl font-semibold text-gray-800">PDF File Upload & Rotate 1</h2>
             <p className="text-gray-600 mt-1">Upload your PDF files and adjust their rotation</p>
           </div>
 
